@@ -16,6 +16,13 @@
 
 package com.focuslock.app.presentation.screens
 
+import android.content.Intent
+import android.net.Uri
+import android.os.Build
+import android.provider.Settings
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -28,7 +35,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Shield
+import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -49,6 +58,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -65,6 +75,7 @@ private val PRESET_MINUTES = listOf(15, 25, 50, 90)
 
 @Composable
 fun HomeScreen(viewModel: MainViewModel) {
+    val context = LocalContext.current
     val permissions by viewModel.permissions.collectAsState()
     val totalSeconds by viewModel.totalFocusTimeSeconds.collectAsState()
     val completedCount by viewModel.completedSessionCount.collectAsState()
@@ -72,6 +83,10 @@ fun HomeScreen(viewModel: MainViewModel) {
 
     val isRunning = timerState is TimerState.Running
     var selectedMinutes by remember { mutableIntStateOf(25) }
+
+    val notificationPermissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission()
+    ) { viewModel.refreshPermissions() }
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -92,7 +107,23 @@ fun HomeScreen(viewModel: MainViewModel) {
 
             PermissionStatusCard(
                 hasOverlay = permissions.hasOverlayPermission,
-                hasNotifications = permissions.hasNotificationPermission
+                hasNotifications = permissions.hasNotificationPermission,
+                hasAccessibility = permissions.hasAccessibilityPermission,
+                onRequestOverlay = {
+                    val intent = Intent(
+                        Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                        Uri.parse("package:${context.packageName}")
+                    )
+                    context.startActivity(intent)
+                },
+                onRequestNotification = {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                        notificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+                    }
+                },
+                onRequestAccessibility = {
+                    context.startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))
+                }
             )
 
             Card(
@@ -183,33 +214,79 @@ fun HomeScreen(viewModel: MainViewModel) {
 }
 
 @Composable
-private fun PermissionStatusCard(hasOverlay: Boolean, hasNotifications: Boolean) {
+private fun PermissionStatusCard(
+    hasOverlay: Boolean,
+    hasNotifications: Boolean,
+    hasAccessibility: Boolean,
+    onRequestOverlay: () -> Unit,
+    onRequestNotification: () -> Unit,
+    onRequestAccessibility: () -> Unit
+) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(20.dp),
         colors = CardDefaults.cardColors(containerColor = DarkCardSurface)
     ) {
         Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable(enabled = !hasOverlay) { onRequestOverlay() },
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 Icon(
-                    imageVector = Icons.Default.Shield,
+                    imageVector = Icons.Default.Visibility,
                     contentDescription = null,
                     tint = if (hasOverlay) EmeraldSuccess else MaterialTheme.colorScheme.error,
                     modifier = Modifier.size(18.dp)
                 )
                 Spacer(modifier = Modifier.size(8.dp))
                 Text(
-                    text = if (hasOverlay) "Overlay permission granted" else "Overlay permission required",
+                    text = if (hasOverlay) "Overlay permission granted" else "Tap to grant overlay permission",
                     color = TextMediumEmphasis,
                     fontSize = 14.sp
                 )
             }
             HorizontalDivider(color = TextMediumEmphasis.copy(alpha = 0.15f))
-            Text(
-                text = if (hasNotifications) "Notifications enabled" else "Notifications disabled",
-                color = TextMediumEmphasis,
-                fontSize = 14.sp
-            )
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable(enabled = !hasNotifications) { onRequestNotification() },
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Notifications,
+                    contentDescription = null,
+                    tint = if (hasNotifications) EmeraldSuccess else MaterialTheme.colorScheme.error,
+                    modifier = Modifier.size(18.dp)
+                )
+                Spacer(modifier = Modifier.size(8.dp))
+                Text(
+                    text = if (hasNotifications) "Notifications enabled" else "Tap to enable notifications",
+                    color = TextMediumEmphasis,
+                    fontSize = 14.sp
+                )
+            }
+            HorizontalDivider(color = TextMediumEmphasis.copy(alpha = 0.15f))
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable(enabled = !hasAccessibility) { onRequestAccessibility() },
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Shield,
+                    contentDescription = null,
+                    tint = if (hasAccessibility) EmeraldSuccess else MaterialTheme.colorScheme.error,
+                    modifier = Modifier.size(18.dp)
+                )
+                Spacer(modifier = Modifier.size(8.dp))
+                Text(
+                    text = if (hasAccessibility) "Accessibility service enabled" else "Tap to enable accessibility service",
+                    color = TextMediumEmphasis,
+                    fontSize = 14.sp
+                )
+            }
         }
     }
 }
