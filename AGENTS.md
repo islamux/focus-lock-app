@@ -64,7 +64,7 @@ both are green before claiming completion.
 
 ## Architecture pointers
 
-- Layered single module: `presentation` → `services`/`viewmodel` →
+- Layered single module: `view`/`viewmodel` → `services` →
   `data` (Room) + `timer` + `overlay`. See [`ARCHITECTURE.md`](ARCHITECTURE.md).
 - `MainViewModel` is the single source of UI state; expose `StateFlow` only.
 - DI is Hilt — use `@Inject constructor`; provide framework types in `di/`.

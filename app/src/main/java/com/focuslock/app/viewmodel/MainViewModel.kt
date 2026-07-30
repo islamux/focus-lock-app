@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-package com.focuslock.app.presentation.viewmodel
+package com.focuslock.app.viewmodel
 
 import android.app.Application
 import android.content.Context

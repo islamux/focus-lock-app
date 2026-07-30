@@ -45,10 +45,10 @@ changing code.
 | Package | Responsibility |
 | --- | --- |
 | `com.focuslock.app` | `FocusLockApp` — `@HiltAndroidApp`, creates the notification channel. |
-| `presentation` | `MainActivity`, `FocusLockNavGraph`. |
-| `presentation.screens` | `HomeScreen` (session setup + stats) and `FocusOverlayContent` (the locked‑in overlay UI). |
-| `presentation.theme` | Compose `FocusLockTheme` (Material 3 dark color scheme + tokens). |
-| `presentation.viewmodel` | `MainViewModel` — exposes `StateFlow` UI state and intent handlers. |
+| `view` | `MainActivity`, `FocusLockNavGraph`. |
+| `view.screens` | `HomeScreen` (session setup + stats) and `FocusOverlayContent` (the locked‑in overlay UI). |
+| `view.theme` | Compose `FocusLockTheme` (Material 3 dark color scheme + tokens). |
+| `viewmodel` | `MainViewModel` — exposes `StateFlow` UI state and intent handlers. |
 | `domain.model` | Plain Kotlin domain models (`FocusSession`). |
 | `database` | Room `FocusDatabase`, `FocusSessionDao`, `FocusSessionEntity`. |
 | `di` | Hilt modules (`AppModule`, `DatabaseModule`). |

@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-package com.focuslock.app.presentation.screens
+package com.focuslock.app.view.screens
 
 import android.content.Intent
 import android.net.Uri
@@ -66,13 +66,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.focuslock.app.presentation.theme.DarkCardSurface
-import com.focuslock.app.presentation.theme.DarkSlateBackground
-import com.focuslock.app.presentation.theme.EmeraldSuccess
-import com.focuslock.app.presentation.theme.NeonCyanPrimary
-import com.focuslock.app.presentation.theme.TextHighEmphasis
-import com.focuslock.app.presentation.theme.TextMediumEmphasis
-import com.focuslock.app.presentation.viewmodel.MainViewModel
+import com.focuslock.app.view.theme.DarkCardSurface
+import com.focuslock.app.view.theme.DarkSlateBackground
+import com.focuslock.app.view.theme.EmeraldSuccess
+import com.focuslock.app.view.theme.NeonCyanPrimary
+import com.focuslock.app.view.theme.TextHighEmphasis
+import com.focuslock.app.view.theme.TextMediumEmphasis
+import com.focuslock.app.viewmodel.MainViewModel
 import com.focuslock.app.timer.TimerState
 
 private val PRESET_MINUTES = listOf(15, 25, 50, 90)

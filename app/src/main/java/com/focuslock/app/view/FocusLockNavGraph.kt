@@ -14,14 +14,14 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-package com.focuslock.app.presentation
+package com.focuslock.app.view
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.focuslock.app.presentation.screens.HomeScreen
-import com.focuslock.app.presentation.viewmodel.MainViewModel
+import com.focuslock.app.view.screens.HomeScreen
+import com.focuslock.app.viewmodel.MainViewModel
 
 private object Routes {
     const val HOME = "home"
