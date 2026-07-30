@@ -130,7 +130,7 @@ class FocusForegroundService : Service() {
         val hours = remainingSec / 3600
         val minutes = (remainingSec % 3600) / 60
         val seconds = remainingSec % 60
-        val formatted = String.format("%02d:%02d:%02d", hours, minutes, seconds)
+        val formatted = String.format(java.util.Locale.ROOT, "%02d:%02d:%02d", hours, minutes, seconds)
 
         val notification = createForegroundNotification("Focus Lock Engaged", "$formatted remaining")
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as android.app.NotificationManager
@@ -139,12 +139,7 @@ class FocusForegroundService : Service() {
 
     private fun onSessionCompleted() {
         // Haptic feedback & vibration
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            vibrator.vibrate(android.os.VibrationEffect.createWaveform(longArrayOf(0, 200, 100, 300), -1))
-        } else {
-            @Suppress("DEPRECATION")
-            vibrator.vibrate(500)
-        }
+        vibrator.vibrate(android.os.VibrationEffect.createWaveform(longArrayOf(0, 200, 100, 300), -1))
 
         // Mark Room DB completed
         serviceScope.launch(Dispatchers.IO) {

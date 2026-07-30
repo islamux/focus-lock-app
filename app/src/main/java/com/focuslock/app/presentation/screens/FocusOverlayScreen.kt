@@ -48,7 +48,7 @@ fun FocusOverlayContent(
     val hours = remainingSec / 3600
     val minutes = (remainingSec % 3600) / 60
     val seconds = remainingSec % 60
-    val formattedTime = String.format("%02d:%02d:%02d", hours, minutes, seconds)
+    val formattedTime = String.format(java.util.Locale.ROOT, "%02d:%02d:%02d", hours, minutes, seconds)
 
     val progress = if (totalSeconds > 0) 1f - (remainingSec.toFloat() / totalSeconds.toFloat()) else 0f
 
