@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Focus Lock</string>
+    <string name="accessibility_service_name">Focus Lock Guard</string>
+    <string name="accessibility_service_description">Monitors app switching during an active focus session and re-attaches the lock overlay so distractions stay blocked.</string>
+</resources>
