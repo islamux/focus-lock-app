@@ -54,7 +54,7 @@ cd focus-lock
 - Stateful composables stay small; hoist state to the ViewModel/`remember`.
 - Prefer `collectAsState()` on the ViewModel’s `StateFlow`s.
 - Pass `Modifier` as the first optional parameter of public composables.
-- Extract reusable UI into `@Composable` functions under `presentation/screens`.
+- Extract reusable UI into `@Composable` functions under `view/screens`.
 
 ### Dependency injection
 

@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-package com.focuslock.app.presentation
+package com.focuslock.app.view
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -24,8 +24,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.focuslock.app.presentation.theme.FocusLockTheme
-import com.focuslock.app.presentation.viewmodel.MainViewModel
+import com.focuslock.app.view.theme.FocusLockTheme
+import com.focuslock.app.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

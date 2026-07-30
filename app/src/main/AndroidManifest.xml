@@ -24,7 +24,7 @@
         tools:targetApi="34">
 
         <activity
-            android:name=".presentation.MainActivity"
+            android:name=".view.MainActivity"
             android:exported="true"
             android:launchMode="singleTop"
             android:theme="@style/Theme.FocusLock">

@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-package com.focuslock.app.presentation.screens
+package com.focuslock.app.view.screens
 
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background

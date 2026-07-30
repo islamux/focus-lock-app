@@ -31,7 +31,7 @@ import com.focuslock.app.R
 import com.focuslock.app.database.FocusSessionDao
 import com.focuslock.app.database.FocusSessionEntity
 import com.focuslock.app.overlay.OverlayManager
-import com.focuslock.app.presentation.MainActivity
+import com.focuslock.app.view.MainActivity
 import com.focuslock.app.timer.CountdownEngine
 import com.focuslock.app.timer.TimerState
 import dagger.hilt.android.AndroidEntryPoint

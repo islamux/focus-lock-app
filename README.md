@@ -47,7 +47,7 @@ cumulative focus time are persisted in a Room database.
 - 🛡 **Persistent overlay** — full‑screen `SYSTEM_ALERT_WINDOW` overlay that
   survives app‑switch attempts via an accessibility service.
 - 🔔 **Foreground service** with a `specialUse` type and an ongoing notification.
-- 🧠 **Clean, layered architecture** — presentation / domain / data, wired with
+- 🧠 **Clean, layered architecture** — view / viewmodel / domain / data, wired with
   Hilt dependency injection.
 - 💾 **Room persistence** — session history, total focus time, completion counts.
 - 🎨 **Material 3 + Jetpack Compose** — neon “locked‑in” dark UI.
@@ -143,7 +143,8 @@ FocusLock/
 │       │   │   ├── di/                         # Hilt modules (App, Database)
 │       │   │   ├── domain/                     # Domain models
 │       │   │   ├── overlay/                    # WindowManager overlay host
-│       │   │   ├── presentation/               # Compose UI, nav, ViewModel, theme
+│       │   │   ├── view/                        # Compose UI, nav, theme (Activity-scoped)
+│       │   │   ├── viewmodel/                   # MainViewModel (StateFlow UI state)
 │       │   │   ├── services/                   # Foreground svc, accessibility, boot receiver
 │       │   │   └── timer/                      # CountdownEngine (hardware clock)
 │       │   └── res/                            # Strings, themes, icons, XML configs

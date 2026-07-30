@@ -32,8 +32,8 @@ import androidx.savedstate.SavedStateRegistry
 import androidx.savedstate.SavedStateRegistryController
 import androidx.savedstate.SavedStateRegistryOwner
 import androidx.savedstate.setViewTreeSavedStateRegistryOwner
-import com.focuslock.app.presentation.screens.FocusOverlayContent
-import com.focuslock.app.presentation.theme.FocusLockTheme
+import com.focuslock.app.view.screens.FocusOverlayContent
+import com.focuslock.app.view.theme.FocusLockTheme
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
