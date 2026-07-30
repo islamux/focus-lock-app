@@ -19,7 +19,6 @@ package com.focuslock.app
 import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.os.Build
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
@@ -31,22 +30,20 @@ class FocusLockApp : Application() {
     }
 
     private fun createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val CHANNEL_ID = "focus_lock_service_channel"
-            val CHANNEL_NAME = "Focus Lock Active Session"
-            
-            val channel = NotificationChannel(
-                CHANNEL_ID,
-                CHANNEL_NAME,
-                NotificationManager.IMPORTANCE_LOW
-            ).apply {
-                description = "Shows notification during an active Focus Lock session"
-                setShowBadge(false)
-            }
-
-            val notificationManager = getSystemService(NotificationManager::class.java)
-            notificationManager.createNotificationChannel(channel)
+        val CHANNEL_ID = "focus_lock_service_channel"
+        val CHANNEL_NAME = "Focus Lock Active Session"
+        
+        val channel = NotificationChannel(
+            CHANNEL_ID,
+            CHANNEL_NAME,
+            NotificationManager.IMPORTANCE_LOW
+        ).apply {
+            description = "Shows notification during an active Focus Lock session"
+            setShowBadge(false)
         }
+
+        val notificationManager = getSystemService(NotificationManager::class.java)
+        notificationManager.createNotificationChannel(channel)
     }
 
     companion object {
