@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Focus Lock</string>
+    <string name="accessibility_service_name">حارس Focus Lock</string>
+    <string name="accessibility_service_description">يراقب تبديل التطبيقات أثناء جلسة التركيز النشطة ويعيد ربط طبقة القفل لمنع التشتيت.</string>
+</resources>

@@ -45,9 +45,11 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -80,6 +82,7 @@ fun HomeScreen(viewModel: MainViewModel) {
     val totalSeconds by viewModel.totalFocusTimeSeconds.collectAsState()
     val completedCount by viewModel.completedSessionCount.collectAsState()
     val timerState by viewModel.timerState.collectAsState()
+    val customPhrase by viewModel.customPhrase.collectAsState()
 
     val isRunning = timerState is TimerState.Running
     var selectedMinutes by remember { mutableIntStateOf(25) }
@@ -142,6 +145,22 @@ fun HomeScreen(viewModel: MainViewModel) {
                         color = TextHighEmphasis,
                         fontSize = 18.sp,
                         fontWeight = FontWeight.SemiBold
+                    )
+
+                    OutlinedTextField(
+                        value = customPhrase,
+                        onValueChange = { viewModel.saveCustomPhrase(it) },
+                        label = { Text("Your focus phrase") },
+                        singleLine = true,
+                        enabled = !isRunning,
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = TextFieldDefaults.colors(
+                            focusedTextColor = TextHighEmphasis,
+                            unfocusedTextColor = TextHighEmphasis,
+                            cursorColor = NeonCyanPrimary,
+                            focusedLabelColor = NeonCyanPrimary,
+                            unfocusedLabelColor = TextMediumEmphasis,
+                        )
                     )
 
                     Row(

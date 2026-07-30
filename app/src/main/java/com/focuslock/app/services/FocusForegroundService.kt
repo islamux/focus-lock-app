@@ -60,7 +60,8 @@ class FocusForegroundService : Service() {
                 val durationSec = intent.getLongExtra(EXTRA_DURATION_SECONDS, 0L)
                 val tag = intent.getStringExtra(EXTRA_TAG) ?: "Deep Work"
                 val note = intent.getStringExtra(EXTRA_NOTE) ?: ""
-                startFocusSession(durationSec, tag, note)
+                val phrase = intent.getStringExtra(EXTRA_PHRASE) ?: "Stay focused."
+                startFocusSession(durationSec, tag, note, phrase)
             }
             ACTION_STOP_SESSION -> {
                 stopFocusSession(completed = false)
@@ -69,7 +70,7 @@ class FocusForegroundService : Service() {
         return START_STICKY
     }
 
-    private fun startFocusSession(durationSeconds: Long, tag: String, note: String) {
+    private fun startFocusSession(durationSeconds: Long, tag: String, note: String, phrase: String) {
         val notification = createForegroundNotification("Focus Lock Active", "00:00:00 remaining")
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -102,7 +103,7 @@ class FocusForegroundService : Service() {
         val remainingFlow = MutableStateFlow(durationSeconds)
 
         // Show window overlay above all apps
-        overlayManager.showOverlay(remainingFlow.asStateFlow(), durationSeconds)
+        overlayManager.showOverlay(remainingFlow.asStateFlow(), durationSeconds, phrase)
 
         // Start countdown engine
         countdownEngine.startTimer(durationSeconds) {
@@ -198,6 +199,7 @@ class FocusForegroundService : Service() {
         const val EXTRA_DURATION_SECONDS = "extra_duration_seconds"
         const val EXTRA_TAG = "extra_tag"
         const val EXTRA_NOTE = "extra_note"
+        const val EXTRA_PHRASE = "extra_phrase"
         const val EXTRA_SHOW_COMPLETION = "extra_show_completion"
     }
 }

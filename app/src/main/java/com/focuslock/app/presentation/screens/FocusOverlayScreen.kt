@@ -41,7 +41,8 @@ import kotlinx.coroutines.flow.StateFlow
 @Composable
 fun FocusOverlayContent(
     remainingSecondsFlow: StateFlow<Long>,
-    totalSeconds: Long
+    totalSeconds: Long,
+    phrase: String = "Stay focused."
 ) {
     val remainingSec by remainingSecondsFlow.collectAsState(initial = totalSeconds)
 
@@ -162,7 +163,7 @@ fun FocusOverlayContent(
             // Lock Statements
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(
-                    text = "Stay focused.",
+                    text = phrase,
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.White
