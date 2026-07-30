@@ -70,3 +70,6 @@ Thumbs.db
 *.jar
 *.nar
 !gradle/wrapper/gradle-wrapper.jar
+
+# Committed release artifacts — intentionally track shipped APKs under releases/
+!releases/*.apk
