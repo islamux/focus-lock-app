@@ -48,8 +48,16 @@ class OverlayManager @Inject constructor(
 
     private var overlayView: View? = null
     private var isShowing = false
+    var currentTotalSeconds: Long = 0L
+    var currentPhrase: String = "Stay focused."
 
-    fun showOverlay(remainingSecondsFlow: kotlinx.coroutines.flow.StateFlow<Long>, totalSeconds: Long) {
+    fun showOverlay(
+        remainingSecondsFlow: kotlinx.coroutines.flow.StateFlow<Long>,
+        totalSeconds: Long,
+        phrase: String? = null
+    ) {
+        currentTotalSeconds = totalSeconds
+        if (phrase != null) currentPhrase = phrase
         if (isShowing) return
 
         // FLAG_FULLSCREEN / FLAG_SHOW_WHEN_LOCKED / FLAG_DISMISS_KEYGUARD have no modern
@@ -83,7 +91,8 @@ class OverlayManager @Inject constructor(
                 FocusLockTheme {
                     FocusOverlayContent(
                         remainingSecondsFlow = remainingSecondsFlow,
-                        totalSeconds = totalSeconds
+                        totalSeconds = currentTotalSeconds,
+                        phrase = currentPhrase
                     )
                 }
             }

@@ -45,7 +45,7 @@ class FocusAccessibilityService : AccessibilityService() {
                         if (!overlayManager.isOverlayShowing()) {
                             overlayManager.showOverlay(
                                 kotlinx.coroutines.flow.MutableStateFlow(countdownEngine.getRemainingSeconds()),
-                                countdownEngine.getRemainingSeconds()
+                                overlayManager.currentTotalSeconds
                             )
                         }
                     }

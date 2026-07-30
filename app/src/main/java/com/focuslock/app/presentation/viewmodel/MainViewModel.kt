@@ -17,6 +17,7 @@
 package com.focuslock.app.presentation.viewmodel
 
 import android.app.Application
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.provider.Settings
@@ -48,6 +49,16 @@ class MainViewModel @Inject constructor(
     private val _permissions = MutableStateFlow(UiPermissionState())
     val permissions: StateFlow<UiPermissionState> = _permissions.asStateFlow()
 
+    private val _customPhrase = MutableStateFlow("Stay focused.")
+    val customPhrase: StateFlow<String> = _customPhrase.asStateFlow()
+
+    private val prefs = getApplication<Application>()
+        .getSharedPreferences("focus_lock_prefs", Context.MODE_PRIVATE)
+
+    init {
+        _customPhrase.value = prefs.getString("custom_phrase", "Stay focused.") ?: "Stay focused."
+    }
+
     val timerState: StateFlow<TimerState> = countdownEngine.timerState
 
     val allSessions: StateFlow<List<FocusSessionEntity>> = sessionDao.getAllSessions()
@@ -74,6 +85,11 @@ class MainViewModel @Inject constructor(
         )
     }
 
+    fun saveCustomPhrase(phrase: String) {
+        _customPhrase.value = phrase
+        prefs.edit().putString("custom_phrase", phrase).apply()
+    }
+
     fun startFocusSession(hours: Int, minutes: Int, tag: String, note: String) {
         val totalSec = (hours * 3600L) + (minutes * 60L)
         if (totalSec <= 0) return
@@ -84,6 +100,7 @@ class MainViewModel @Inject constructor(
             putExtra(FocusForegroundService.EXTRA_DURATION_SECONDS, totalSec)
             putExtra(FocusForegroundService.EXTRA_TAG, tag)
             putExtra(FocusForegroundService.EXTRA_NOTE, note)
+            putExtra(FocusForegroundService.EXTRA_PHRASE, _customPhrase.value)
         }
 
         context.startForegroundService(intent)
